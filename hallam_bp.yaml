@@ -1,5 +1,5 @@
 blocks:
-    five_one: &block_5/1
+    inner fuel: &block_inner_fuel
         fuel: &fuel_bundle
             # There are 18 fuel pins in each process tube. 
             # In the 5/1 cell, there are 5 full process tubes of fuel
@@ -45,6 +45,7 @@ blocks:
             Thot: 400.0
         moderator:  &moderator
             # the way the hex cell cuts the moderator blocks exactly equals 3 mod blocks
+            # process tube wholes are 4.4" diamater, or 2.2" radius
             material: Graphite
             shape: ScallopedHex
             # "The graphite is a prism of hexagonal XS measuring 16 in across flats"
@@ -53,6 +54,7 @@ blocks:
             Tinput: 20.0
             Thot: 454.44
             mult: 3
+            sradius: 5.588
         moderator coolant edge: &moderator_coolant_edge
             # gaps between moderator/moderator 
             # "There is a nominal 0.160" gap between edges of adjacent moderator elements"
@@ -97,6 +99,7 @@ blocks:
             mult: 5
             Tinput: 20.0
             Thot: 400.0
+            od: center tube.id
         coolant:
             shape: DerivedShape
             material: Sodium
@@ -456,19 +459,19 @@ assemblies:
         - 2
         - 2
         - 2
-    inner core:
+    inner fuel:
         specifier: IC
         height: *heights
         blocks: 
             - *block_plug
-            - *block_5/1
-            - *block_5/1
-            - *block_5/1
-            - *block_5/1
-            - *block_5/1
-            - *block_5/1
-            - *block_5/1
-            - *block_5/1
+            - *block_inner_fuel
+            - *block_inner_fuel
+            - *block_inner_fuel
+            - *block_inner_fuel
+            - *block_inner_fuel
+            - *block_inner_fuel
+            - *block_inner_fuel
+            - *block_inner_fuel
             - *block_plug
         axial mesh points: *axial
         material modifications:
@@ -494,7 +497,7 @@ assemblies:
             - I
             - I
             - P
-    outer core a:
+    outer fuel a:
         specifier: OA
         height: *heights
         blocks: 
@@ -522,7 +525,7 @@ assemblies:
             - A
             - A
             - P
-    outer core b:
+    outer fuel b:
         specifier: OB
         height: *heights
         blocks: 
@@ -550,7 +553,7 @@ assemblies:
             - P
         material modifications:
             U235_wt_frac: *enrich
-    outer core c:
+    outer fuel c:
         specifier: OC
         height: *heights
         blocks: 
@@ -578,7 +581,7 @@ assemblies:
             - P
         material modifications:
             U235_wt_frac: *enrich
-    outer core d:
+    outer fuel d:
         specifier: OD
         height: *heights
         blocks: 
@@ -647,23 +650,66 @@ grids:
         geom: hex
         symmetry: third periodic
         lattice map: |
-          -     SH   SH   SH
-          -  SH   SH   SH   SH
-           SH   RR   RR   RR   SH
-             RR   RR   RR   RR   SH
-           RR   RR   RR   RR   RR   SH
-             RR   OC   OC   RR   RR   SH
-               OC   OC   OC   RR   RR   SH
+          -     RR   RR   RR
+          -  RR   RR   RR   RR
+           RR   RR   RR   RR   RR
+             RR   RR   RR   RR   RR
+           RR   RR   RR   RR   RR   RR
+             RR   OC   OC   RR   RR   RR
+               OC   OC   OC   RR   RR   RR
              OC   OC   OC   OC   RR   RR
-               OC   MC   OC   OC   RR   SH
-                 MC   MC   PC   OC   RR   SH
-               MC   MC   MC   OC   OC   RR
-                 MC   MC   MC   OC   RR   SH
-                   PC   MC   MC   OC   RR   SH
-                 MC   MC   MC   MC   OC   RR
-                   IC   MC   MC   OC   RR   SH
-                     IC   US   MC   OC   RR
-                   IC   IC   MC   OC   RR   SH
-                     IC   MC   MC   OC   RR
-                   IC   IC   MC   PC   RR   SH
+               OC   OA   OC   OC   RR   RR
+                 OA   OA   OB   OC   RR   RR
+               OA   OA   OA   OC   OC   RR
+                 OA   OA   OA   OC   RR   RR
+                   OB   OA   OA   OC   RR   RR
+                 OA   OA   OA   OA   OC   RR
+                   IC   OA   OA   OC   RR   RR
+                     IC   OB   OA   OC   RR
+                   IC   IC   OA   OC   RR   RR
+                     IC   OA   OA   OC   RR
+                   IC   IC   OA   OB   RR   RR
 
+nuclide flags:
+    AL: {burn: false, xs: true}
+    AM241: {burn: true, xs: true}
+    C: {burn: false, xs: true}   
+    CR: {burn: false, xs: true}
+    FE: {burn: false, xs: true}
+    LFP35: {burn: true, xs: true}
+    LFP38: {burn: true, xs: true}
+    LFP39: {burn: true, xs: true}
+    LFP40: {burn: true, xs: true}
+    LFP41: {burn: true, xs: true}
+    MN: {burn: false, xs: true}
+    MO: {burn: false, xs: true}
+    SM: {burn: false, xs: true}
+    GD: {burn: false, xs: true}
+    NA: {burn: false, xs: true}
+    NI: {burn: false, xs: true}
+    O: {burn: false, xs: true, expandTo: ["O16", "O17"]}
+    ZR: {burn: false, xs: true}
+    SN: {burn: false, xs: true}
+    U234: {burn: true, xs: true}
+    U235: {burn: true, xs: true}
+    U236: {burn: true, xs: true}
+    U238: {burn: true, xs: true}
+    NP237: {burn: true, xs: true}
+    NP238: {burn: true, xs: true}
+    PU236: {burn: true, xs: true}
+    PU238: {burn: true, xs: true}
+    PU239: {burn: true, xs: true}
+    PU240: {burn: true, xs: true}
+    PU241: {burn: true, xs: true}
+    PU242: {burn: true, xs: true}
+    AM241: {burn: true, xs: true}
+    AM242: {burn: true, xs: true}
+    AM243: {burn: true, xs: true}
+    CM242: {burn: true, xs: true}
+    CM243: {burn: true, xs: true}
+    CM244: {burn: true, xs: true}
+    CM245: {burn: true, xs: true}
+    CM246: {burn: true, xs: true}
+    CM247: {burn: true, xs: true}
+    DUMP1: {burn: true, xs: true}
+    DUMP2: {burn: true, xs: true}
