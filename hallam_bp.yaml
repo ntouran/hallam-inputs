@@ -80,20 +80,20 @@ blocks:
             Tinput: 20.0
             Thot: 454.44
             mult: moderator.mult
-        moderator coolant edge: &moderator_coolant_edge
+        moderator coolant gap: &moderator_coolant_edge
             # gaps between moderator/moderator 
             # "There is a nominal 0.160" gap between edges of adjacent moderator elements"
             # See also: moderator coolant annulus
-            # If logs are 16" , then pitch is that + 2*0.016" + 2*0.160" = 18.048"
-            # In hexagons, p = sqrt(3)*s so the side length is 26.466845 cm
+            # Moderator cell hex pitch is 16.102"
+            # In hexagons, p = sqrt(3)*s so the side length is 23.613095 cm
             # The length of these sections will be that minus the diameter of the process
-            # tubes (which is 4.4") plus 2x the sodium thickness (0.016"). 
-            # So, 15.291 cm.
+            # tubes (which is 4.4") plus 2x the sodium thickness (0.160"). 
+            # So, 11.62429
             # There are 9 of these straight sections per 5/1 unit cell.
             material: Sodium
             shape: Rectangle
             widthOuter: 0.4064
-            lengthOuter: 15.291
+            lengthOuter: 11.62429
             mult: 9
             Tinput: 20.0
             Thot: 400.0
@@ -188,9 +188,9 @@ blocks:
             mult: 3.3333
         moderator: 
             <<: *moderator
-        moderator sheath: 
+        moderator clad: 
             <<: *moderator_sheath
-        moderator coolant edge:
+        moderator coolant gap:
             <<: *moderator_coolant_edge
         moderator coolant annulus:
             <<: *moderator_coolant_annulus
@@ -263,9 +263,9 @@ blocks:
             mult: 5.666
         moderator: 
             <<: *moderator
-        moderator sheath: 
+        moderator clad:
             <<: *moderator_sheath
-        moderator coolant edge:
+        moderator coolant gap:
             <<: *moderator_coolant_edge
         moderator coolant annulus:
             <<: *moderator_coolant_annulus
@@ -308,9 +308,9 @@ blocks:
             mult: 5.3333
         moderator: 
             <<: *moderator
-        moderator sheath: 
+        moderator clad:
             <<: *moderator_sheath
-        moderator coolant edge:
+        moderator coolant gap:
             <<: *moderator_coolant_edge
         moderator coolant annulus:
             <<: *moderator_coolant_annulus
@@ -354,9 +354,9 @@ blocks:
             mult: 3.6666
         moderator: 
             <<: *moderator
-        moderator sheath: 
+        moderator clad:
             <<: *moderator_sheath
-        moderator coolant edge:
+        moderator coolant gap:
             <<: *moderator_coolant_edge
         moderator coolant annulus:
             <<: *moderator_coolant_annulus
@@ -419,9 +419,9 @@ blocks:
         moderator: 
             <<: *moderator
             mult: 2
-        moderator sheath: 
+        moderator clad:
             <<: *moderator_sheath
-        moderator coolant edge:
+        moderator coolant gap:
             <<: *moderator_coolant_edge
             mult: 6
         moderator coolant annulus:
