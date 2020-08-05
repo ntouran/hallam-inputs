@@ -77,7 +77,9 @@ blocks:
             # The circle radius is the process tube radius + the gap
             sradius: 5.9944
             # "The average moderator temperature is 850 °F"
-            Tinput: 20.0
+            # Attempt to disable thermal expansion for the sheath
+            # so we stay consistent with other blocks (e.g. plug)
+            Tinput: 454.44
             Thot: 454.44
             mult: moderator.mult
         moderator coolant gap: &moderator_coolant_edge
@@ -457,12 +459,22 @@ blocks:
             <<: *dummy_clad
     plug: &block_plug
         # just do pure graphite on top for starters
-        # Pitch is sqrt(3) * the pitch of the moderators
+        # Pitch is sqrt(3) * the pitch of the moderator cell
+        # which is 16.102"
+        #
+        # There will be a bit of a problem here because of thermal expansion
+        # of the moderator block and its sheath, both of which dynamically
+        # set the pitch. This has to stay consistent with it!
+        #
+        # If cell pitch really is 16.102", then the max area should be 
+        # sqrt(3)/2* (sqrt(3) * 16.102)^2= 4345.89 cm^2 for reference.
+        #
+        # The plug here is right then, and the other ones are wrong!
         reflector:
             shape: Hexagon
             material: Graphite
-            op: 70.39054
-            Tinput: 20.0
+            op: 70.839285
+            Tinput: 400.0
             Thot: 400.0
 assemblies:
     heights: &heights
