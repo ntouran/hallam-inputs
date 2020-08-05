@@ -67,10 +67,11 @@ blocks:
             Thot: 454.44
             mult: 3
         moderator clad:  &moderator_sheath
+            # moderator is sheathed in 0.016"-thick SS304
             material: SS304
             shape: ScallopedHex
             op: 40.49268
-            # include 2x the sheath thickness to make it "annular"
+            # subtract 2x the sheath thickness to make it "annular"
             ip: moderator.op
             # Just half the gap this time,  0.16/2"
             offset: 0.2032
@@ -127,18 +128,53 @@ blocks:
             Tinput: 20.0
             Thot: 400.0
             od: center tube.id
-        coolant:
+        coolant: &coolant
             shape: DerivedShape
             material: Sodium
             Tinput: 20.0
             Thot: 400.0
-        cr thimble: 
+        cr thimble:  &cr_thimble
             material: Zircalloy2
             shape: Circle
             id: 9.0424
             od: 9.51484
             Tinput: 20.0
             Thot: 400.0
+        cr void:
+            # empty space inside CR thimble when CR is withdrawn
+            material: Void
+            shape: Circle
+            od: cr thimble.id
+            Tinput: 20.0
+            Thot: 400.0
+    inner fuel control: &block_fuel_control
+        # inner fuel with control material instead of void
+        fuel:
+            <<: *fuel_bundle
+        clad:
+            <<: *fuel_clad
+        bond:
+            <<: *fuel_bond
+        spacers:
+            <<: *fuel_spacers
+        process tube: 
+            <<: *process_tube
+        moderator: 
+            <<: *moderator
+        moderator clad:
+            <<: *moderator_sheath
+        moderator coolant gap:
+            <<: *moderator_coolant_edge
+        moderator coolant annulus:
+            <<: *moderator_coolant_annulus
+        center tube:
+            <<: *center_tube
+        center hole:
+            <<: *center_hole
+        coolant:
+            <<: *coolant
+        cr thimble:
+            <<: *cr_thimble
         cr outer clad:
             material: HastelloyX
             shape: Circle
