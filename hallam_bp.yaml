@@ -49,12 +49,37 @@ blocks:
             material: Graphite
             shape: ScallopedHex
             # "The graphite is a prism of hexagonal XS measuring 16 in across flats"
-            op: 40.64
+            # "moderator sheath material SS304, 0.016" thick"
+            # Figure 5 of Aronchick shows the moderator dimensions best. The entire system
+            # pitch is 16.102", including the moderator sheath and the gaps
+            # Gaps are 0.160"
+            # So the actual OP of the moderator is 16.102 - 0.160 - 2*0.016" = 15.91
+            # But the text is pretty clear that the graphite itself is 16" across flats.
+            # Meh, the Figure 5 is even more clear. so we go with that. 
+            op: 40.4114
+            # offset is how far off the circle radius the scalloped hex is. This is equal
+            # to half the gap plus the sheath thickness, or 0.16/2+0.016 = 0.096"
+            offset: 0.24384
+            # The circle radius is the process tube radius + the gap + the sheath
+            sradius: 6.03504
             # "The average moderator temperature is 850 °F"
             Tinput: 20.0
             Thot: 454.44
             mult: 3
-            sradius: 5.588
+        moderator clad:  &moderator_sheath
+            material: SS304
+            shape: ScallopedHex
+            op: 40.49268
+            # include 2x the sheath thickness to make it "annular"
+            ip: moderator.op
+            # Just half the gap this time,  0.16/2"
+            offset: 0.2032
+            # The circle radius is the process tube radius + the gap
+            sradius: 5.9944
+            # "The average moderator temperature is 850 °F"
+            Tinput: 20.0
+            Thot: 454.44
+            mult: moderator.mult
         moderator coolant edge: &moderator_coolant_edge
             # gaps between moderator/moderator 
             # "There is a nominal 0.160" gap between edges of adjacent moderator elements"
@@ -155,11 +180,16 @@ blocks:
             <<: *fuel_bond
         spacers:
             <<: *fuel_spacers
+            # reduce by 1.666/6 since they're only in fuel tubes
+            mult: 0.2776
         process tube: 
             <<: *process_tube
+            # sum of fuel + dummys
             mult: 3.3333
         moderator: 
             <<: *moderator
+        moderator sheath: 
+            <<: *moderator_sheath
         moderator coolant edge:
             <<: *moderator_coolant_edge
         moderator coolant annulus:
@@ -233,6 +263,8 @@ blocks:
             mult: 5.666
         moderator: 
             <<: *moderator
+        moderator sheath: 
+            <<: *moderator_sheath
         moderator coolant edge:
             <<: *moderator_coolant_edge
         moderator coolant annulus:
@@ -276,6 +308,8 @@ blocks:
             mult: 5.3333
         moderator: 
             <<: *moderator
+        moderator sheath: 
+            <<: *moderator_sheath
         moderator coolant edge:
             <<: *moderator_coolant_edge
         moderator coolant annulus:
@@ -320,6 +354,8 @@ blocks:
             mult: 3.6666
         moderator: 
             <<: *moderator
+        moderator sheath: 
+            <<: *moderator_sheath
         moderator coolant edge:
             <<: *moderator_coolant_edge
         moderator coolant annulus:
@@ -383,6 +419,8 @@ blocks:
         moderator: 
             <<: *moderator
             mult: 2
+        moderator sheath: 
+            <<: *moderator_sheath
         moderator coolant edge:
             <<: *moderator_coolant_edge
             mult: 6
