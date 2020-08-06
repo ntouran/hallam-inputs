@@ -761,7 +761,8 @@ grids:
 nuclide flags:
     AL: {burn: false, xs: true}
     AM241: {burn: true, xs: true}
-    C: {burn: false, xs: true}   
+    # Dragon lib I have doesn't have C13
+    C: {burn: false, xs: true, expandTo: [C12]}   
     CR: {burn: false, xs: true}
     FE: {burn: false, xs: true}
     LFP35: {burn: true, xs: true}
@@ -771,7 +772,8 @@ nuclide flags:
     LFP41: {burn: true, xs: true}
     MN: {burn: false, xs: true}
     MO: {burn: false, xs: true}
-    SM: {burn: false, xs: true}
+    # no SM144 or 146 in draglib
+    SM: {burn: false, xs: true, expandTo: ["SM147","SM148","SM149","SM150","SM152","SM154"]}
     GD: {burn: false, xs: true}
     NA: {burn: false, xs: true}
     NI: {burn: false, xs: true}
