@@ -26,7 +26,7 @@ blocks:
             od: clad.id
             mult: fuel.mult
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
         spacers: &fuel_spacers
             # spacers at 1 ft intervals, eq area= 0.0285 in²
             shape: Circle
@@ -72,7 +72,9 @@ blocks:
             shape: ScallopedHex
             op: 40.49268
             # subtract 2x the sheath thickness to make it "annular"
-            ip: moderator.op
+            # Do not link with moderator.op because it thermally expands too far
+            # (this will technically overlap)
+            ip: 40.4114
             # Just half the gap this time,  0.16/2"
             offset: 0.2032
             # The circle radius is the process tube radius + the gap
@@ -99,7 +101,7 @@ blocks:
             lengthOuter: 11.62429
             mult: 9
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
         moderator coolant annulus: &moderator_coolant_annulus
             # the sodium outside the process tubes.
             # assume 0.160" gap as well
@@ -110,7 +112,7 @@ blocks:
             od: 11.9888
             mult: 5
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
         center tube: &center_tube
             # empty tube in the middle of each fuel cluster
             shape: Circle
@@ -132,7 +134,7 @@ blocks:
             shape: DerivedShape
             material: Sodium
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
         cr thimble:  &cr_thimble
             material: Zircalloy2
             shape: Circle
@@ -280,7 +282,7 @@ blocks:
             shape: DerivedShape
             material: Sodium
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
     peripheral fuel b: &block_peripheral_b
         # Outer blocks with 4.3333 fuel, 0.33 reflectors, 1.333 dummys
         # There are 6 of these (red)
@@ -327,7 +329,7 @@ blocks:
             shape: DerivedShape
             material: Sodium
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
     peripheral fuel c: &block_peripheral_c
         # Outer blocks with 4.3333 fuel, 0.66 reflectors, 1.0 dummys
         # There are 6 of these (orange)
@@ -372,7 +374,7 @@ blocks:
             shape: DerivedShape
             material: Sodium
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
     peripheral fuel d: &block_peripheral_d
         # Outer blocks with 2.6666 fuel, 1.66 reflectors, 1.0 sodium temperature device
         # Assume temperature measurement is inside a regular process tube
@@ -410,7 +412,7 @@ blocks:
             od: process tube.id
             mult: 1.0
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
         reflector: 
             <<: *reflector
             mult: 1.6666
@@ -420,7 +422,7 @@ blocks:
             shape: DerivedShape
             material: Sodium
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
     reflector: &block_reflector
         # on the very outside, these contain only reflector components, moderator, and
         # sodium. Hmm, actually 6 of them contain 1/3 of a fuel bundle and 12 do not. 
@@ -477,7 +479,7 @@ blocks:
             od: process tube.id
             mult: 0.125
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
         reflector: 
             <<: *reflector
             mult: 2.79166
@@ -487,7 +489,7 @@ blocks:
             shape: DerivedShape
             material: Sodium
             Tinput: 20.0
-            Thot: 400.0
+            Thot: 414.0
         dummy:
             <<: *dummy
             mult: 0.291666
