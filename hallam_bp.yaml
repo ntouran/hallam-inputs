@@ -575,7 +575,7 @@ assemblies:
                 - 0.036
                 -
         xs types:
-            - P
+            - A
             - I
             - I
             - I
@@ -584,7 +584,7 @@ assemblies:
             - I
             - I
             - I
-            - P
+            - A
     outer fuel a:
         specifier: OA
         height: *heights
@@ -603,7 +603,6 @@ assemblies:
         material modifications:
             U235_wt_frac: *enrich
         xs types:
-            - P
             - A
             - A
             - A
@@ -612,7 +611,8 @@ assemblies:
             - A
             - A
             - A
-            - P
+            - A
+            - A
     outer fuel b:
         specifier: OB
         height: *heights
@@ -629,7 +629,7 @@ assemblies:
             - *block_plug
         axial mesh points: *axial
         xs types:
-            - P
+            - A
             - B
             - B
             - B
@@ -638,7 +638,7 @@ assemblies:
             - B
             - B
             - B
-            - P
+            - A
         material modifications:
             U235_wt_frac: *enrich
     outer fuel c:
@@ -657,7 +657,7 @@ assemblies:
             - *block_plug
         axial mesh points: *axial
         xs types:
-            - P
+            - A
             - C
             - C
             - C
@@ -666,7 +666,7 @@ assemblies:
             - C
             - C
             - C
-            - P
+            - A
         material modifications:
             U235_wt_frac: *enrich
     outer fuel d:
@@ -685,7 +685,7 @@ assemblies:
             - *block_plug
         axial mesh points: *axial
         xs types:
-            - P
+            - A
             - D
             - D
             - D
@@ -694,23 +694,23 @@ assemblies:
             - D
             - D
             - D
-            - P
+            - A
         material modifications:
             U235_wt_frac: *enrich
     reflector:
         specifier: RR
         height: *heights
         xs types:
-            - P
-            - R
-            - R
-            - R
-            - R
-            - R
-            - R
-            - R
-            - R
-            - P
+            - A
+            - A
+            - A
+            - A
+            - A
+            - A
+            - A
+            - A
+            - A
+            - A
         blocks: 
             - *block_plug
             - *block_reflector
@@ -734,29 +734,8 @@ systems:
           y: 0.0
           z: 0.0
 grids: 
-   core:
-        geom: hex
-        symmetry: third periodic
-        lattice map: |
-          -     RR   RR   RR
-          -  RR   RR   RR   RR
-           RR   RR   RR   RR   RR
-             RR   RR   RR   RR   RR
-           RR   RR   RR   RR   RR   RR
-             RR   OC   OC   RR   RR   RR
-               OC   OC   OC   RR   RR   RR
-             OC   OC   OC   OC   RR   RR
-               OC   OA   OC   OC   RR   RR
-                 OA   OA   OB   OC   RR   RR
-               OA   OA   OA   OC   OC   RR
-                 OA   OA   OA   OC   RR   RR
-                   OB   OA   OA   OC   RR   RR
-                 OA   OA   OA   OA   OC   RR
-                   IC   OA   OA   OC   RR   RR
-                     IC   OB   OA   OC   RR
-                   IC   IC   OA   OC   RR   RR
-                     IC   OA   OA   OC   RR
-                   IC   IC   OA   OB   RR   RR
+    core: 
+        !include hallam_core.yaml
 
 nuclide flags:
     AL: {burn: false, xs: true}
